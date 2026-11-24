@@ -1,0 +1,24 @@
+# Python cache files
+__pycache__/
+*.pyc
+
+# Database - each computer creates its own with:
+#   python manage.py migrate
+#   python manage.py seed_data
+db.sqlite3
+
+# Files uploaded through the admin panel
+uploads/
+
+# Virtual environments and secrets
+venv/
+.venv/
+.env
+
+# Project report (has personal details) - delete these two lines to upload it
+PolarPortal_SRS_Report.docx
+PolarPortal_SRS_Report.pdf
+
+# Editor and Office temporary files
+.vscode/
+~$*

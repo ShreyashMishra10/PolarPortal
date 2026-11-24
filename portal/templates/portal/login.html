@@ -1,0 +1,28 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<section class="auth-page">
+    <div class="aurora aurora-1"></div>
+    <div class="aurora aurora-2"></div>
+
+    <div class="auth-box">
+        <div class="auth-icon">❄</div>
+        <h1>Welcome <span class="gradient-text">Back</span></h1>
+        <p class="auth-subtitle">Log in to bookmark articles and share your own polar stories.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            {% include 'portal/includes/form_fields.html' %}
+            <!-- sends the user back to the page they came from after login -->
+            <input type="hidden" name="next" value="{{ next }}">
+            <button type="submit" class="btn btn-primary btn-block">Log In</button>
+        </form>
+
+        <p class="auth-switch">New here? <a href="{% url 'signup' %}">Create an account</a></p>
+    </div>
+</section>
+
+{% endblock %}

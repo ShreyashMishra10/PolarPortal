@@ -1,0 +1,38 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Media Gallery{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <div class="aurora aurora-2"></div>
+    <div class="aurora aurora-3"></div>
+    <div class="container">
+        <span class="badge">Media Dissemination</span>
+        <h1>Media <span class="gradient-text">Gallery</span></h1>
+        <p>Free photos, videos, podcasts and documents about the polar regions to use in classrooms, talks and projects.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+
+        <!-- filter buttons: each one just adds ?type=... to the URL -->
+        <div class="pills">
+            <a href="{% url 'media' %}" class="pill {% if not selected_type %}active{% endif %}">All</a>
+            {% for value, label in media_types %}
+                <a href="?type={{ value }}" class="pill {% if selected_type == value %}active{% endif %}">{{ label }}s</a>
+            {% endfor %}
+        </div>
+
+        <div class="grid grid-4">
+            {% for item in items %}
+                {% include 'portal/includes/media_card.html' %}
+            {% empty %}
+                <p class="empty">Nothing here yet in this section.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

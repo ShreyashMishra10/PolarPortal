@@ -1,0 +1,52 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Submit an Article{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <div class="aurora aurora-1"></div>
+    <div class="aurora aurora-2"></div>
+    <div class="container">
+        <span class="badge">Contribute</span>
+        <h1>Share Your <span class="gradient-text">Polar Story</span></h1>
+        <p>Write about a topic you know. Our admin team will review it, and once approved it will appear in the Knowledge Hub.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container contact-grid">
+
+        <div class="contact-info">
+            <div class="feature">
+                <div class="feature-icon">📝</div>
+                <h3>Writing Tips</h3>
+                <p>Use simple words, explain any scientific terms, and keep paragraphs short.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✅</div>
+                <h3>Check Your Facts</h3>
+                <p>Use trusted sources like NCPOR, NASA or NSIDC so readers can rely on your article.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⏳</div>
+                <h3>Review Process</h3>
+                <p>Every article is checked by an admin. You can see its status on your dashboard.</p>
+            </div>
+        </div>
+
+        <div class="form-box">
+            <h2>New Article</h2>
+            <br>
+            <form method="post">
+                {% csrf_token %}
+                {% include 'portal/includes/form_fields.html' %}
+                <button type="submit" class="btn btn-primary">Submit for Review</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-outline">Cancel</a>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}My Dashboard{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <div class="aurora aurora-1"></div>
+    <div class="aurora aurora-3"></div>
+    <div class="container">
+        <span class="badge">My Dashboard</span>
+        <h1>Hello, <span class="gradient-text">{{ user.username }}</span> 👋</h1>
+        <p>Your saved articles and your contributions to PolarPortal, all in one place.</p>
+        <br>
+        <a href="{% url 'submit_article' %}" class="btn btn-primary">✍ Submit a New Article</a>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+
+        <!-- small summary boxes -->
+        <div class="grid grid-4">
+            <div class="fact-card">
+                <div class="fact-number gradient-text">{{ my_bookmarks|length }}</div>
+                <p>Bookmarked articles</p>
+            </div>
+            <div class="fact-card">
+                <div class="fact-number gradient-text">{{ my_articles|length }}</div>
+                <p>Articles submitted</p>
+            </div>
+            <div class="fact-card">
+                <div class="fact-number gradient-text">{{ approved_count }}</div>
+                <p>Approved &amp; live</p>
+            </div>
+            <div class="fact-card">
+                <div class="fact-number gradient-text">{{ pending_count }}</div>
+                <p>Waiting for review</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Bookmarks ===== -->
+<section class="section">
+    <div class="container">
+        <h2>★ My Bookmarks</h2>
+        <br>
+        <div class="grid grid-3">
+            {% for bookmark in my_bookmarks %}
+                {% include 'portal/includes/article_card.html' with article=bookmark.article %}
+            {% empty %}
+                <div class="empty">
+                    You haven't saved any articles yet.<br><br>
+                    <a href="{% url 'article_list' %}" class="btn btn-outline">Browse the Knowledge Hub</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ===== My submitted articles ===== -->
+<section class="section">
+    <div class="container">
+        <h2>✍ My Submitted Articles</h2>
+        <br>
+        {% for article in my_articles %}
+            <div class="my-article">
+                <div>
+                    <h3>{{ article.title }}</h3>
+                    <span class="helptext">{{ article.category.name }} &middot; Submitted {{ article.created_at|date:"d M Y" }}</span>
+                </div>
+                {% if article.is_approved %}
+                    <a href="{% url 'article_detail' article.pk %}" class="status approved">✔ Live, view it</a>
+                {% else %}
+                    <span class="status pending">⏳ Pending review</span>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p class="empty">You haven't submitted any articles yet. Share what you know about the poles!</p>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

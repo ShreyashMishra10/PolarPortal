@@ -1,0 +1,123 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Knowledge Hub{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <div class="aurora aurora-1"></div>
+    <div class="aurora aurora-3"></div>
+    <div class="container">
+        <span class="badge">Knowledge Repository</span>
+        <h1>The <span class="gradient-text">Knowledge Hub</span></h1>
+        <p>Easy-to-read articles on polar science, written for students, teachers and the public.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+
+        <!-- Search and filter form. It sends the values in the URL (GET request). -->
+        <form method="get" class="filters">
+            <input type="text" name="q" value="{{ query }}" placeholder="🔍 Search articles...">
+
+            <select name="category">
+                <option value="">All topics</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>
+                        {{ category.icon }} {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <select name="region">
+                <option value="">Both poles</option>
+                <option value="arctic" {% if selected_region == 'arctic' %}selected{% endif %}>Arctic</option>
+                <option value="antarctic" {% if selected_region == 'antarctic' %}selected{% endif %}>Antarctic</option>
+                <option value="both" {% if selected_region == 'both' %}selected{% endif %}>Both / Global</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">Filter</button>
+            {% if query or selected_category or selected_region %}
+                <a href="{% url 'article_list' %}" class="btn btn-outline">Clear</a>
+            {% endif %}
+        </form>
+
+        <p style="color: var(--muted); margin-bottom: 20px;">
+            Showing {{ articles|length }} article{{ articles|length|pluralize }}
+            {% if query %}for "<strong>{{ query }}</strong>"{% endif %}
+        </p>
+
+        <div class="grid grid-3">
+            {% for article in articles %}
+                {% include 'portal/includes/article_card.html' %}
+            {% empty %}
+                <p class="empty">😕 No articles matched your search. Try different words.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ===== Glossary of polar words ===== -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <span class="eyebrow">Learn the Words</span>
+            <h2>Polar <span class="gradient-text">Glossary</span></h2>
+            <p>Common terms you will find while reading about the polar regions.</p>
+        </div>
+
+        <div class="grid grid-3">
+            <div class="glossary-item reveal">
+                <h4>Albedo</h4>
+                <p>How much sunlight a surface reflects. Fresh snow reflects most of it; dark ocean absorbs most of it.</p>
+            </div>
+            <div class="glossary-item reveal">
+                <h4>Sea Ice</h4>
+                <p>Frozen ocean water that floats on the sea. It grows in winter and shrinks in summer.</p>
+            </div>
+            <div class="glossary-item reveal">
+                <h4>Ice Sheet</h4>
+                <p>A huge mass of land ice covering more than 50,000 km². Only Antarctica and Greenland have them today.</p>
+            </div>
+            <div class="glossary-item reveal">
+                <h4>Ice Shelf</h4>
+                <p>A thick floating platform of ice where a glacier or ice sheet flows from land out onto the ocean.</p>
+            </div>
+            <div class="glossary-item reveal">
+                <h4>Calving</h4>
+                <p>When a chunk of ice breaks off the edge of a glacier or ice shelf, creating an iceberg.</p>
+            </div>
+            <div class="glossary-item reveal">
+                <h4>Permafrost</h4>
+                <p>Ground that stays frozen for at least two years in a row, common across the Arctic.</p>
+            </div>
+            <div class="glossary-item reveal">
+                <h4>Ice Core</h4>
+                <p>A long cylinder of ice drilled from an ice sheet. Its layers and air bubbles record past climate.</p>
+            </div>
+            <div class="glossary-item reveal">
+                <h4>Polar Night</h4>
+                <p>The period in winter when the Sun does not rise above the horizon for at least a full day.</p>
+            </div>
+            <div class="glossary-item reveal">
+                <h4>Midnight Sun</h4>
+                <p>The opposite of polar night: in summer the Sun stays above the horizon for 24 hours or more.</p>
+            </div>
+            <div class="glossary-item reveal">
+                <h4>Aurora</h4>
+                <p>Natural light in the polar sky caused by particles from the Sun hitting gases in the upper atmosphere.</p>
+            </div>
+            <div class="glossary-item reveal">
+                <h4>Krill</h4>
+                <p>Small shrimp-like animals that are the main food for many whales, seals and penguins in Antarctica.</p>
+            </div>
+            <div class="glossary-item reveal">
+                <h4>Arctic Amplification</h4>
+                <p>The fact that the Arctic is warming much faster than the rest of the planet.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

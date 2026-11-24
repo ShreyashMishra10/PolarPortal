@@ -1,0 +1,287 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- ===== Hero section with aurora ===== -->
+<section class="hero">
+    <div class="stars"></div>
+    <div class="aurora aurora-1"></div>
+    <div class="aurora aurora-2"></div>
+    <div class="aurora aurora-3"></div>
+
+    <div class="container hero-content">
+        <span class="badge">Polar Science Outreach Portal</span>
+        <h1>Explore the <span class="gradient-text">Ends of the Earth</span></h1>
+        <p>A single place to learn, watch and share the science of the Arctic and Antarctic,
+           from melting glaciers to the wildlife that calls the ice home.</p>
+
+        <div class="hero-buttons">
+            <a href="{% url 'article_list' %}" class="btn btn-primary">Start Exploring</a>
+            <a href="{% url 'media' %}" class="btn btn-outline">Browse Media</a>
+        </div>
+
+        <form action="{% url 'article_list' %}" method="get" class="hero-search">
+            <input type="text" name="q" placeholder="Search e.g. sea ice, penguins, permafrost...">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <div class="popular">
+            Popular:
+            <a href="{% url 'article_list' %}?q=sea ice">Sea ice</a>
+            <a href="{% url 'article_list' %}?q=penguin">Penguins</a>
+            <a href="{% url 'article_list' %}?q=aurora">Aurora</a>
+            <a href="{% url 'article_list' %}?q=India">India in Antarctica</a>
+            <a href="{% url 'article_list' %}?q=permafrost">Permafrost</a>
+        </div>
+    </div>
+
+    <a href="#explore" class="scroll-hint">↓</a>
+
+    <!-- simple snowy mountains drawn with SVG -->
+    <svg class="mountains" viewBox="0 0 1440 180" preserveAspectRatio="none">
+        <path fill="#0b1630" d="M0,180 L0,110 L120,60 L220,120 L360,30 L480,110 L600,70 L720,130 L860,40 L980,100 L1100,50 L1240,120 L1340,80 L1440,110 L1440,180 Z"/>
+        <path fill="#050b1a" d="M0,180 L0,140 L160,100 L300,150 L440,90 L580,140 L740,100 L900,150 L1040,110 L1200,150 L1340,120 L1440,140 L1440,180 Z"/>
+    </svg>
+</section>
+
+<!-- ===== Stats strip ===== -->
+<div class="container">
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-number gradient-text" data-target="{{ article_count }}">0</div>
+            <div class="stat-label">Knowledge Articles</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number gradient-text" data-target="{{ media_count }}">0</div>
+            <div class="stat-label">Media Resources</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number gradient-text" data-target="{{ category_count }}">0</div>
+            <div class="stat-label">Research Topics</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number gradient-text" data-target="{{ event_count }}">0</div>
+            <div class="stat-label">Outreach Events</div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== "Did you know?" moving strip ===== -->
+<div class="ticker">
+    <div class="ticker-track">
+        <span><strong>❄ Did you know?</strong> Antarctica holds about 90% of all the ice on Earth.</span>
+        <span><strong>🐧</strong> Emperor penguins can dive deeper than 500 metres.</span>
+        <span><strong>🌊</strong> About 90% of an iceberg is hidden under the water.</span>
+        <span><strong>🦅</strong> The Arctic tern flies around 70,000 km every year, from pole to pole.</span>
+        <span><strong>🏔</strong> Lake Vostok is a liquid lake buried under almost 4 km of Antarctic ice.</span>
+        <span><strong>🐻‍❄️</strong> A polar bear's skin is black and its fur is actually transparent.</span>
+        <span><strong>☀</strong> At the South Pole the Sun stays up for about six months at a time.</span>
+        <span><strong>🇮🇳</strong> India has three polar research stations: Maitri, Bharati and Himadri.</span>
+    </div>
+</div>
+
+<!-- ===== Research topics ===== -->
+<section class="section" id="explore">
+    <div class="container">
+        <div class="section-title">
+            <span class="eyebrow">Knowledge Repository</span>
+            <h2>Research <span class="gradient-text">Topics</span></h2>
+            <p>Pick a topic and dive into the knowledge repository.</p>
+        </div>
+
+        <div class="grid grid-3">
+            {% for category in categories %}
+                <a href="{% url 'article_list' %}?category={{ category.id }}" class="category-card reveal">
+                    <div class="category-icon">{{ category.icon }}</div>
+                    <h3>{{ category.name }}</h3>
+                    <p>{{ category.description }}</p>
+                    <span class="category-count">{{ category.approved_count }} article{{ category.approved_count|pluralize }} →</span>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ===== Why the poles matter (big numbers) ===== -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <span class="eyebrow">Why It Matters</span>
+            <h2>The Poles in <span class="gradient-text">Numbers</span></h2>
+            <p>The coldest places on Earth have a huge effect on the whole planet, including India.</p>
+        </div>
+
+        <div class="grid grid-4">
+            <div class="fact-card reveal">
+                <div class="fact-number gradient-text">~90%</div>
+                <p>of all the ice on Earth is in Antarctica</p>
+            </div>
+            <div class="fact-card reveal">
+                <div class="fact-number gradient-text">~70%</div>
+                <p>of the world's fresh water is frozen in the Antarctic ice sheet</p>
+            </div>
+            <div class="fact-card reveal">
+                <div class="fact-number gradient-text">~4×</div>
+                <p>faster warming in the Arctic than the global average since 1979</p>
+            </div>
+            <div class="fact-card reveal">
+                <div class="fact-number gradient-text">~58 m</div>
+                <p>sea level rise if the entire Antarctic ice sheet melted</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Featured articles ===== -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <span class="eyebrow">Editor's Picks</span>
+            <h2>Featured <span class="gradient-text">Reads</span></h2>
+            <p>Hand-picked stories from the frozen frontiers.</p>
+        </div>
+
+        <div class="grid grid-3">
+            {% for article in featured_articles %}
+                {% include 'portal/includes/article_card.html' %}
+            {% empty %}
+                <p class="empty">No featured articles yet.</p>
+            {% endfor %}
+        </div>
+
+        <div class="section-footer">
+            <a href="{% url 'article_list' %}" class="btn btn-outline">View all articles</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Arctic vs Antarctic ===== -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <span class="eyebrow">Compare</span>
+            <h2>Two Poles, <span class="gradient-text">Two Worlds</span></h2>
+            <p>They are both cold and icy, but the Arctic and Antarctic are very different places.</p>
+        </div>
+
+        <div class="compare">
+            <div class="compare-box arctic reveal">
+                <h3>🧭 The Arctic</h3>
+                <ul>
+                    <li><strong>What it is:</strong> A frozen ocean surrounded by land</li>
+                    <li><strong>Coldest recorded:</strong> about −69.6 °C (Greenland)</li>
+                    <li><strong>Famous animal:</strong> Polar bear</li>
+                    <li><strong>People:</strong> Around 4 million live in the Arctic region</li>
+                    <li><strong>Big concern:</strong> Summer sea ice is shrinking fast</li>
+                </ul>
+            </div>
+            <div class="compare-box antarctic reveal">
+                <h3>🐧 The Antarctic</h3>
+                <ul>
+                    <li><strong>What it is:</strong> A frozen continent surrounded by ocean</li>
+                    <li><strong>Coldest recorded:</strong> −89.2 °C (Vostok Station, 1983)</li>
+                    <li><strong>Famous animal:</strong> Emperor penguin</li>
+                    <li><strong>People:</strong> No permanent residents, only researchers</li>
+                    <li><strong>Big concern:</strong> Ice sheet melt raising sea levels</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Who is this portal for ===== -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <span class="eyebrow">Our Audience</span>
+            <h2>Who Is <span class="gradient-text">PolarPortal</span> For?</h2>
+            <p>Polar science should not stay locked inside research papers. This portal is built for everyone.</p>
+        </div>
+
+        <div class="grid grid-4">
+            <div class="feature reveal">
+                <div class="feature-icon">🎓</div>
+                <h3>Students</h3>
+                <p>Easy articles and facts for projects, quizzes and general knowledge.</p>
+            </div>
+            <div class="feature reveal">
+                <div class="feature-icon">👩‍🏫</div>
+                <h3>Teachers</h3>
+                <p>Ready-to-use photos, videos and documents to bring the poles into the classroom.</p>
+            </div>
+            <div class="feature reveal">
+                <div class="feature-icon">🔬</div>
+                <h3>Researchers</h3>
+                <p>A place to share fieldwork and findings with the public in simple words.</p>
+            </div>
+            <div class="feature reveal">
+                <div class="feature-icon">🌍</div>
+                <h3>Curious Minds</h3>
+                <p>Anyone who wants to know how the frozen ends of the Earth affect our daily lives.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Latest media ===== -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <span class="eyebrow">Media Dissemination</span>
+            <h2>Latest <span class="gradient-text">Media</span></h2>
+            <p>Photos, videos, podcasts and documents to share in classrooms and beyond.</p>
+        </div>
+
+        <div class="grid grid-4">
+            {% for item in latest_media %}
+                {% include 'portal/includes/media_card.html' %}
+            {% empty %}
+                <p class="empty">No media uploaded yet.</p>
+            {% endfor %}
+        </div>
+
+        <div class="section-footer">
+            <a href="{% url 'media' %}" class="btn btn-outline">Open media gallery</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Upcoming events ===== -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <span class="eyebrow">Outreach</span>
+            <h2>Upcoming <span class="gradient-text">Events</span></h2>
+            <p>Join talks, workshops and webinars with polar researchers.</p>
+        </div>
+
+        {% for event in upcoming_events %}
+            {% include 'portal/includes/event_card.html' %}
+        {% empty %}
+            <p class="empty">No upcoming events right now. Check back soon!</p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ===== Call to action ===== -->
+<section class="section">
+    <div class="container">
+        <div class="cta reveal">
+            <h2>Have a polar story to share?</h2>
+            <p>Create a free account to write articles for the portal and bookmark your favourite reads.</p>
+            <div class="hero-buttons">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'submit_article' %}" class="btn btn-primary">✍ Submit an Article</a>
+                    <a href="{% url 'dashboard' %}" class="btn btn-outline">My Dashboard</a>
+                {% else %}
+                    <a href="{% url 'signup' %}" class="btn btn-primary">Join PolarPortal</a>
+                    <a href="{% url 'login' %}" class="btn btn-outline">I already have an account</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

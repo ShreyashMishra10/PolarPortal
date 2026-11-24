@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PolarPortal{% endblock %} | Polar Science Outreach</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'portal/css/style.css' %}">
+</head>
+<body>
+
+    <!-- ===== Navigation bar ===== -->
+    {% with page=request.resolver_match.url_name %}
+    <nav class="navbar">
+        <div class="container nav-inner">
+            <a href="{% url 'home' %}" class="logo">❄ Polar<span>Portal</span></a>
+
+            <button class="menu-btn" aria-label="Open menu">☰</button>
+
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}" class="{% if page == 'home' %}active{% endif %}">Home</a></li>
+                <li><a href="{% url 'article_list' %}" class="{% if page == 'article_list' or page == 'article_detail' %}active{% endif %}">Knowledge Hub</a></li>
+                <li><a href="{% url 'media' %}" class="{% if page == 'media' %}active{% endif %}">Media</a></li>
+                <li><a href="{% url 'events' %}" class="{% if page == 'events' %}active{% endif %}">Events</a></li>
+                <li><a href="{% url 'about' %}" class="{% if page == 'about' %}active{% endif %}">About</a></li>
+                <li><a href="{% url 'contact' %}" class="{% if page == 'contact' %}active{% endif %}">Contact</a></li>
+
+                <!-- different buttons for logged-in users and guests -->
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'dashboard' %}" class="{% if page == 'dashboard' or page == 'submit_article' %}active{% endif %}">👤 {{ user.username }}</a></li>
+                    <li>
+                        <!-- Django needs logout to be a POST request, so it is a small form -->
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline btn-sm">Logout</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}" class="{% if page == 'login' %}active{% endif %}">Login</a></li>
+                    <li><a href="{% url 'signup' %}" class="btn btn-primary btn-sm">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    {% endwith %}
+
+    <!-- ===== Success / error messages ===== -->
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- ===== Page content goes here ===== -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="{% url 'home' %}" class="logo">❄ Polar<span>Portal</span></a>
+                    <p>An integrated outreach knowledge repository and media dissemination portal for polar science,
+                       bringing the Arctic and Antarctic closer to students, teachers and curious minds.</p>
+                </div>
+
+                <div>
+                    <h4>Explore</h4>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'article_list' %}">Knowledge Hub</a></li>
+                        <li><a href="{% url 'media' %}">Media Gallery</a></li>
+                        <li><a href="{% url 'events' %}">Events</a></li>
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Trusted Sources</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://ncpor.res.in" target="_blank">NCPOR, India</a></li>
+                        <li><a href="https://nsidc.org" target="_blank">NSIDC</a></li>
+                        <li><a href="https://earthobservatory.nasa.gov" target="_blank">NASA Earth Observatory</a></li>
+                        <li><a href="https://www.bas.ac.uk" target="_blank">British Antarctic Survey</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Get Polar News</h4>
+                    <p>Subscribe for new articles, expedition stories and event updates.</p>
+                    <form action="{% url 'subscribe' %}" method="post" class="subscribe-form">
+                        {% csrf_token %}
+                        <input type="email" name="email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <p class="copyright">&copy; {% now "Y" %} PolarPortal &middot; Built with Django &middot; Made for learning about our planet's frozen frontiers</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'portal/js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <div class="container">
+        <a href="{% url 'article_list' %}" class="back-link">← Back to Knowledge Hub</a>
+
+        <div class="article-hero thumb-{{ article.region }}">{{ article.get_icon }}</div>
+
+        <div class="article-layout">
+            <article>
+                <span class="badge">{{ article.category.name }} &middot; {{ article.get_region_display }}</span>
+                <h1 style="font-size: clamp(30px, 4vw, 44px);">{{ article.title }}</h1>
+
+                <div class="article-meta">
+                    <span>✍ {{ article.author }}</span>
+                    <span>📅 {{ article.created_at|date:"d M Y" }}</span>
+                    <span>⏱ {{ article.reading_time }} min read</span>
+                    <span>👁 {{ article.views }} views</span>
+                </div>
+
+                <!-- bookmark button: logged-in users can save, guests are asked to log in -->
+                {% if user.is_authenticated %}
+                    <form action="{% url 'toggle_bookmark' article.pk %}" method="post" class="bookmark-form">
+                        {% csrf_token %}
+                        {% if is_bookmarked %}
+                            <button type="submit" class="btn btn-primary btn-sm">★ Saved to bookmarks</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-outline btn-sm">☆ Bookmark this article</button>
+                        {% endif %}
+                    </form>
+                {% else %}
+                    <p class="bookmark-form helptext"><a href="{% url 'login' %}?next={{ request.path }}">Log in</a> to bookmark this article.</p>
+                {% endif %}
+
+                <!-- linebreaks turns each blank line in the text into a new paragraph -->
+                <div class="article-content">
+                    {{ article.content|linebreaks }}
+                </div>
+
+                <!-- the real research this article is based on -->
+                {% if article.source %}
+                    <div class="source-box">
+                        <h4>📚 Based on Published Research</h4>
+                        <p class="source-citation">{{ article.source }}</p>
+                        {% if article.source_url %}
+                            <a href="{{ article.source_url }}" target="_blank" class="btn btn-outline btn-sm">Read the original source →</a>
+                        {% endif %}
+                        <p class="helptext">This article was written in simple language by {{ article.author }} to explain the research above.
+                           All credit for the original findings goes to the authors of the source.</p>
+                    </div>
+                {% endif %}
+            </article>
+
+            <aside>
+                <div class="sidebar-box">
+                    <h4>More in {{ article.category.name }}</h4>
+                    {% for item in related %}
+                        <a href="{% url 'article_detail' item.pk %}">{{ item.title }}</a>
+                    {% empty %}
+                        <p style="color: var(--muted);">No other articles in this topic yet.</p>
+                    {% endfor %}
+                    <br>
+                    <a href="{% url 'article_list' %}?category={{ article.category.id }}" style="border: none; color: var(--aurora-teal);">See all in this topic →</a>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

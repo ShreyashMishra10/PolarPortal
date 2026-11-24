@@ -1,0 +1,21 @@
+<!-- One article card. Used on the home page, the Knowledge Hub and the article page. -->
+<a href="{% url 'article_detail' article.pk %}" class="card reveal">
+    <div class="thumb thumb-{{ article.region }}">
+        <span class="tag">{{ article.category.name }}</span>
+        <span class="tag tag-right">{{ article.get_region_display }}</span>
+        {{ article.get_icon }}
+    </div>
+    <div class="card-body">
+        <h3>{{ article.title }}</h3>
+        <p>{{ article.summary }}</p>
+        <span class="read-more">Read article →</span>
+        <div class="card-meta">
+            {% if article.source %}
+                <span class="research-tag">📚 Research-backed</span>
+            {% else %}
+                <span>✍ {{ article.author }}</span>
+            {% endif %}
+            <span>⏱ {{ article.reading_time }} min read</span>
+        </div>
+    </div>
+</a>

@@ -1,0 +1,51 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <div class="aurora aurora-1"></div>
+    <div class="aurora aurora-3"></div>
+    <div class="container">
+        <span class="badge">Contact</span>
+        <h1>Let's <span class="gradient-text">Talk</span></h1>
+        <p>Questions, suggestions, or something to add to the portal? Send us a message.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container contact-grid">
+
+        <div class="contact-info">
+            <div class="feature">
+                <div class="feature-icon">🏫</div>
+                <h3>For Schools</h3>
+                <p>Ask us about classroom sessions and teaching material on polar science.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔬</div>
+                <h3>For Researchers</h3>
+                <p>Share your fieldwork photos, papers or stories and we will help explain them to the public.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🤝</div>
+                <h3>For Everyone</h3>
+                <p>Found a mistake or have an idea? We read every message.</p>
+            </div>
+        </div>
+
+        <div class="form-box">
+            <h2>Send a Message</h2>
+            <br>
+            <form method="post">
+                {% csrf_token %}
+                {% include 'portal/includes/form_fields.html' %}
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

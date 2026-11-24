@@ -1,0 +1,48 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Events{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <div class="aurora aurora-1"></div>
+    <div class="aurora aurora-2"></div>
+    <div class="container">
+        <span class="badge">Outreach</span>
+        <h1>Events &amp; <span class="gradient-text">Webinars</span></h1>
+        <p>Talks, workshops and live sessions where scientists share their polar work with everyone.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2>Upcoming</h2>
+        <br>
+        {% for event in upcoming %}
+            {% include 'portal/includes/event_card.html' %}
+        {% empty %}
+            <p class="empty">No upcoming events right now. Check back soon!</p>
+        {% endfor %}
+
+        {% if past %}
+            <br><br>
+            <h2>Past Events</h2>
+            <br>
+            {% for event in past %}
+                {% include 'portal/includes/event_card.html' with is_past=True %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="cta reveal">
+            <h2>Want a polar session at your school or college?</h2>
+            <p>We can arrange talks, workshops and online sessions with polar researchers for students and teachers.</p>
+            <a href="{% url 'contact' %}" class="btn btn-primary">Invite us</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

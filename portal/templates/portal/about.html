@@ -1,0 +1,229 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <div class="aurora aurora-1"></div>
+    <div class="aurora aurora-2"></div>
+    <div class="container">
+        <span class="badge">About the Project</span>
+        <h1>Why <span class="gradient-text">PolarPortal?</span></h1>
+        <p>Polar science matters to every one of us, but most of it stays inside research papers. We want to change that.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container about-grid">
+        <div class="reveal">
+            <h2>Our Mission</h2>
+            <p>The Arctic and Antarctic control a large part of Earth's climate. They store most of the planet's fresh water,
+               reflect sunlight back into space and keep a record of the past climate locked inside their ice.</p>
+            <p>PolarPortal is an <strong>integrated outreach knowledge repository and media dissemination portal</strong>.
+               It collects polar science in one place, explains it in simple language and shares photos, videos,
+               podcasts and documents so anyone can learn from them and pass them on.</p>
+            <p>Our audience is school and college students, teachers, science communicators and anyone who is curious
+               about the coldest places on Earth.</p>
+            <p><strong>How we write:</strong> every article in the Knowledge Hub is written in our own simple words and is based on
+               real, published research, such as papers in <em>Nature</em> and <em>The Cryosphere</em>, or official sources like NCPOR, NASA and NOAA.
+               Each article names its source and links to it, so readers can always check the original science.</p>
+        </div>
+        <div class="about-visual thumb-both reveal">🌍</div>
+    </div>
+</section>
+
+<!-- ===== Problem and solution ===== -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <span class="eyebrow">The Problem</span>
+            <h2>What Are We <span class="gradient-text">Solving?</span></h2>
+            <p>There is a big gap between polar scientists and the public. PolarPortal is built to close that gap.</p>
+        </div>
+
+        <div class="grid grid-3">
+            <div class="problem-card reveal">
+                <div class="problem">✖ Problem</div>
+                <p>Polar research is written in technical language inside scientific papers.</p>
+                <div class="solution">✔ Our solution</div>
+                <p>Short, simple articles that anyone can read in a few minutes.</p>
+            </div>
+            <div class="problem-card reveal">
+                <div class="problem">✖ Problem</div>
+                <p>Information is scattered across many different websites and organisations.</p>
+                <div class="solution">✔ Our solution</div>
+                <p>One integrated portal for articles, media, events and trusted sources.</p>
+            </div>
+            <div class="problem-card reveal">
+                <div class="problem">✖ Problem</div>
+                <p>It is hard to find exactly the topic you need.</p>
+                <div class="solution">✔ Our solution</div>
+                <p>Search plus filters by topic and by pole in the Knowledge Hub.</p>
+            </div>
+            <div class="problem-card reveal">
+                <div class="problem">✖ Problem</div>
+                <p>Teachers struggle to find good photos, videos and documents for class.</p>
+                <div class="solution">✔ Our solution</div>
+                <p>A Media Gallery sorted by type, ready to share.</p>
+            </div>
+            <div class="problem-card reveal">
+                <div class="problem">✖ Problem</div>
+                <p>People think the poles are far away and don't affect them.</p>
+                <div class="solution">✔ Our solution</div>
+                <p>Facts and stories that show how polar change affects sea levels and weather everywhere.</p>
+            </div>
+            <div class="problem-card reveal">
+                <div class="problem">✖ Problem</div>
+                <p>The public rarely gets to meet or ask questions to polar scientists.</p>
+                <div class="solution">✔ Our solution</div>
+                <p>Outreach events, webinars and a contact form to connect both sides.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <span class="eyebrow">Features</span>
+            <h2>What the Portal <span class="gradient-text">Offers</span></h2>
+        </div>
+
+        <div class="grid grid-3">
+            <div class="feature reveal">
+                <div class="feature-icon">📚</div>
+                <h3>Knowledge Repository</h3>
+                <p>Articles sorted by topic and region, with search and filters so you can find what you need quickly.</p>
+            </div>
+            <div class="feature reveal">
+                <div class="feature-icon">🎞️</div>
+                <h3>Media Dissemination</h3>
+                <p>A gallery of photos, videos, podcasts and documents that can be shared freely for education.</p>
+            </div>
+            <div class="feature reveal">
+                <div class="feature-icon">🎤</div>
+                <h3>Outreach Events</h3>
+                <p>Talks, workshops and webinars that connect the public with polar researchers.</p>
+            </div>
+            <div class="feature reveal">
+                <div class="feature-icon">📚</div>
+                <h3>Research-Backed Content</h3>
+                <p>Every article cites the real peer-reviewed paper or official source it is based on, with a direct link.</p>
+            </div>
+            <div class="feature reveal">
+                <div class="feature-icon">🛠️</div>
+                <h3>Easy Content Management</h3>
+                <p>Admins add and edit articles, media and events through the Django admin panel, so no coding is needed.</p>
+            </div>
+            <div class="feature reveal">
+                <div class="feature-icon">✉️</div>
+                <h3>Community Connect</h3>
+                <p>A contact form and newsletter sign-up keep the community involved and up to date.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Timeline ===== -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <span class="eyebrow">History</span>
+            <h2>Milestones in <span class="gradient-text">Polar Exploration</span></h2>
+            <p>From the first ships in icy waters to India's modern research stations.</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item reveal">
+                <div class="timeline-year gradient-text">1773</div>
+                <p>Captain James Cook's ships become the first known to cross the Antarctic Circle.</p>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-year gradient-text">1820</div>
+                <p>The first confirmed sightings of the Antarctic continent are made by sailing expeditions.</p>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-year gradient-text">1911</div>
+                <p>Norwegian explorer Roald Amundsen and his team become the first people to reach the South Pole.</p>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-year gradient-text">1959</div>
+                <p>The Antarctic Treaty is signed, setting Antarctica aside for peace and science.</p>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-year gradient-text">1979</div>
+                <p>Satellites begin continuously measuring polar sea ice, a record that continues today.</p>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-year gradient-text">1981</div>
+                <p>India launches its first scientific expedition to Antarctica.</p>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-year gradient-text">1983</div>
+                <p>India sets up Dakshin Gangotri, its first Antarctic station, and joins the Antarctic Treaty.</p>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-year gradient-text">1989</div>
+                <p>Maitri, India's permanent research station in the Schirmacher Oasis, begins work.</p>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-year gradient-text">2008</div>
+                <p>India opens Himadri, its Arctic research station at Ny-Ålesund, Svalbard.</p>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-year gradient-text">2012</div>
+                <p>Bharati, India's newest Antarctic station, opens in the Larsemann Hills.</p>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-year gradient-text">2022</div>
+                <p>India passes the Indian Antarctic Act to regulate its activities on the continent.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <span class="eyebrow">FAQ</span>
+            <h2>Frequently Asked <span class="gradient-text">Questions</span></h2>
+            <p>Click a question to see the answer.</p>
+        </div>
+
+        <div class="faq">
+            <details>
+                <summary>Why are the poles so cold?</summary>
+                <p>Sunlight reaches the poles at a very low angle, so the same energy is spread over a bigger area.
+                   The bright ice and snow also reflect most of the sunlight back into space, and for months in winter the Sun does not rise at all.</p>
+            </details>
+            <details>
+                <summary>Do polar bears and penguins live together?</summary>
+                <p>No. Polar bears live only in the Arctic (north) and penguins live in the Southern Hemisphere, mostly around Antarctica.
+                   They never meet in the wild.</p>
+            </details>
+            <details>
+                <summary>Who owns Antarctica?</summary>
+                <p>Nobody. Under the Antarctic Treaty of 1959, Antarctica is used only for peaceful purposes and scientific research.
+                   Some countries have old territorial claims, but the treaty puts them on hold. More than 50 countries have joined it, including India.</p>
+            </details>
+            <details>
+                <summary>Does melting sea ice raise sea level?</summary>
+                <p>Hardly at all, because sea ice is already floating in the ocean, like ice cubes in a glass of water.
+                   The real concern is ice on land, in Greenland and Antarctica, which adds new water to the ocean when it melts.</p>
+            </details>
+            <details>
+                <summary>How does polar ice affect India?</summary>
+                <p>India has a long coastline with big cities like Mumbai, Chennai and Kolkata. Rising sea levels from melting land ice
+                   increase the risk of flooding and coastal erosion. Changes at the poles can also influence ocean currents and weather patterns.</p>
+            </details>
+            <details>
+                <summary>How can I contribute to PolarPortal?</summary>
+                <p>Use the Contact page to send us articles, photos, event ideas or corrections. Researchers, teachers and students are all welcome.</p>
+            </details>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

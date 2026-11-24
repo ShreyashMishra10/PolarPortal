@@ -1,0 +1,23 @@
+<!-- One media card. Shows the uploaded picture if there is one, otherwise a coloured box with an icon. -->
+<div class="card reveal">
+    <div class="thumb thumb-{{ item.region }}">
+        <span class="tag">{{ item.get_media_type_display }}</span>
+        {% if item.file and item.is_image %}
+            <img src="{{ item.file.url }}" alt="{{ item.title }}">
+        {% else %}
+            {{ item.icon }}
+        {% endif %}
+    </div>
+    <div class="card-body">
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.description|truncatewords:22 }}</p>
+        <div class="card-meta">
+            <span>{{ item.get_region_display }}</span>
+            {% if item.file %}
+                <a href="{{ item.file.url }}" target="_blank">Open file →</a>
+            {% elif item.link %}
+                <a href="{{ item.link }}" target="_blank">View resource →</a>
+            {% endif %}
+        </div>
+    </div>
+</div>

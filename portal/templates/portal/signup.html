@@ -1,0 +1,26 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+
+<section class="auth-page">
+    <div class="aurora aurora-1"></div>
+    <div class="aurora aurora-3"></div>
+
+    <div class="auth-box">
+        <div class="auth-icon">🐧</div>
+        <h1>Join <span class="gradient-text">PolarPortal</span></h1>
+        <p class="auth-subtitle">Free account. Save your favourite articles and contribute to the knowledge hub.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            {% include 'portal/includes/form_fields.html' %}
+            <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+        </form>
+
+        <p class="auth-switch">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+    </div>
+</section>
+
+{% endblock %}
