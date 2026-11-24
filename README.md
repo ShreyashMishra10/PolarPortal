@@ -5,7 +5,27 @@
 A Django website that collects polar science knowledge (Arctic & Antarctic) in one place,
 explains it in simple language, and shares media such as photos, videos, podcasts and documents.
 
-## How to run
+## 🌐 Live Demo
+
+**https://shreyashlm10.pythonanywhere.com**
+
+| Page | Link |
+|------|------|
+| Home | https://shreyashlm10.pythonanywhere.com/ |
+| Knowledge Hub | https://shreyashlm10.pythonanywhere.com/articles/ |
+| Media Gallery | https://shreyashlm10.pythonanywhere.com/media/ |
+| Login | https://shreyashlm10.pythonanywhere.com/login/ |
+
+Try the member features with the demo account: username `demo`, password `demo@123`.
+
+## Tech stack
+
+- **Backend:** Python 3.13, Django 6.1
+- **Database:** SQLite
+- **Frontend:** Django templates, plain CSS and vanilla JavaScript (no frameworks)
+- **Hosting:** PythonAnywhere
+
+## How to run on your computer
 
 ```bash
 pip install -r requirements.txt
@@ -76,7 +96,7 @@ portal/                 -> our app
     models.py           -> database tables (Category, Article, Bookmark, MediaItem, Event, ContactMessage, Subscriber)
     views.py            -> logic for every page
     urls.py             -> links each URL to a view
-    forms.py            -> Contact form and Subscribe form
+    forms.py            -> Contact, Subscribe and Submit Article forms
     admin.py            -> what the admin panel shows
     templates/portal/   -> HTML pages (base.html is the common layout)
     static/portal/      -> style.css and main.js
@@ -90,3 +110,18 @@ portal/                 -> our app
 3. The view gets data from the database through the **models** (e.g. `Article.objects.filter(...)`).
 4. The view passes the data to a **template**, which builds the HTML page.
 5. Admins add or edit content from `/admin/`, so no code changes are needed for new articles.
+
+## Deployment (PythonAnywhere)
+
+The live site runs with these settings, set in the PythonAnywhere WSGI file (not stored in this repository):
+
+- `DJANGO_DEBUG=False` turns off debug mode, so visitors see a friendly 404 page instead of error details
+- `python manage.py collectstatic` copies CSS/JS into `staticfiles/`, which PythonAnywhere serves at `/static/`
+
+To update the live site after pushing new code:
+
+```bash
+cd ~/PolarPortal && git pull && workon polarenv && python manage.py migrate && python manage.py collectstatic --noinput
+```
+
+Then click **Reload** on the PythonAnywhere Web tab.
