@@ -26,9 +26,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-local-development-key-only')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# On our computer DEBUG is on. On the live server we set DJANGO_DEBUG=False.
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+# The website addresses this project is allowed to run on
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.pythonanywhere.com']
+
+# On the live site (HTTPS) only send login and form cookies over a secure connection
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 
 # Application definition
@@ -119,6 +126,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# "python manage.py collectstatic" copies all CSS/JS/admin files here for the live server
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Files uploaded through the admin panel (photos, PDFs etc.) are saved here
 MEDIA_URL = 'uploads/'

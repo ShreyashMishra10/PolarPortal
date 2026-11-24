@@ -1,0 +1,21 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Page Not Found{% endblock %}
+
+{% block content %}
+
+<!-- Django shows this page automatically when a page does not exist (only when DEBUG is off) -->
+<section class="auth-page">
+    <div class="aurora aurora-1"></div>
+    <div class="aurora aurora-2"></div>
+
+    <div class="auth-box" style="text-align: center;">
+        <div class="auth-icon">🧊</div>
+        <h1>Lost in the <span class="gradient-text">Ice</span></h1>
+        <p class="auth-subtitle">The page you are looking for doesn't exist or has drifted away like an iceberg.</p>
+        <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>
+        <a href="{% url 'article_list' %}" class="btn btn-outline">Knowledge Hub</a>
+    </div>
+</section>
+
+{% endblock %}

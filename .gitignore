@@ -10,6 +10,9 @@ db.sqlite3
 # Files uploaded through the admin panel
 uploads/
 
+# Created by "python manage.py collectstatic" on the server
+staticfiles/
+
 # Virtual environments and secrets
 venv/
 .venv/
