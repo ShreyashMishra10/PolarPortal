@@ -227,6 +227,7 @@ img {
     filter: blur(90px);
     opacity: 0.45;
     animation: drift 18s ease-in-out infinite alternate;
+    pointer-events: none; /* the glow is only decoration, so clicks go through it to the buttons */
 }
 
 .aurora-1 {
