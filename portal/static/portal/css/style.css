@@ -1347,6 +1347,13 @@ textarea:focus {
     margin-bottom: 2px;
 }
 
+/* Read / Approve buttons on the admin part of the dashboard */
+.admin-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
 .status {
     padding: 6px 16px;
     border-radius: 50px;

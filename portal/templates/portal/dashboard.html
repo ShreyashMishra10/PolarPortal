@@ -13,8 +13,75 @@
         <p>Your saved articles and your contributions to PolarPortal, all in one place.</p>
         <br>
         <a href="{% url 'submit_article' %}" class="btn btn-primary">✍ Submit a New Article</a>
+        {% if user.is_staff %}
+            <a href="{% url 'admin:index' %}" class="btn btn-outline">🛡 Open Admin Panel</a>
+        {% endif %}
     </div>
 </section>
+
+<!-- ===== Admin section: only staff users see this ===== -->
+{% if user.is_staff %}
+<section class="section">
+    <div class="container">
+        <h2>🛡 Website Overview <span class="helptext">(admin only)</span></h2>
+        <br>
+        <div class="grid grid-4">
+            <div class="fact-card">
+                <div class="fact-number gradient-text">{{ site_articles }}</div>
+                <p>Live articles</p>
+            </div>
+            <div class="fact-card">
+                <div class="fact-number gradient-text">{{ site_pending|length }}</div>
+                <p>Waiting for your review</p>
+            </div>
+            <div class="fact-card">
+                <div class="fact-number gradient-text">{{ site_users }}</div>
+                <p>Registered users</p>
+            </div>
+            <div class="fact-card">
+                <div class="fact-number gradient-text">{{ site_subscribers }}</div>
+                <p>Newsletter subscribers</p>
+            </div>
+        </div>
+
+        <br><br>
+        <h2>⏳ Articles Waiting for Review</h2>
+        <br>
+        {% for article in site_pending %}
+            <div class="my-article">
+                <div>
+                    <h3>{{ article.title }}</h3>
+                    <span class="helptext">By {{ article.author }} &middot; {{ article.category.name }} &middot; Submitted {{ article.created_at|date:"d M Y" }}</span>
+                </div>
+                <div class="admin-actions">
+                    <a href="{% url 'admin:portal_article_change' article.pk %}" class="btn btn-outline btn-sm">Read / Edit</a>
+                    <form action="{% url 'approve_article' article.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-sm">✔ Approve</button>
+                    </form>
+                </div>
+            </div>
+        {% empty %}
+            <p class="empty">No articles are waiting. Everything is reviewed! 🎉</p>
+        {% endfor %}
+
+        <br><br>
+        <h2>✉ Latest Contact Messages <span class="helptext">({{ site_message_count }} in total)</span></h2>
+        <br>
+        {% for msg in site_messages %}
+            <div class="my-article">
+                <div>
+                    <h3>{{ msg.subject }}</h3>
+                    <span class="helptext">From {{ msg.name }} &middot; {{ msg.sent_at|date:"d M Y, H:i" }}</span>
+                </div>
+                <a href="{% url 'admin:portal_contactmessage_change' msg.pk %}" class="btn btn-outline btn-sm">Read</a>
+            </div>
+        {% empty %}
+            <p class="empty">No messages yet.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
 
 <section class="section">
     <div class="container">

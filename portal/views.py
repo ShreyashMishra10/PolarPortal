@@ -2,11 +2,12 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
-from .models import Category, Article, MediaItem, Event, Bookmark
+from .models import Category, Article, MediaItem, Event, Bookmark, ContactMessage, Subscriber
 from .forms import ContactForm, SubscribeForm, ArticleForm
 
 
@@ -169,7 +170,28 @@ def dashboard(request):
         'approved_count': my_articles.filter(is_approved=True).count(),
         'pending_count': my_articles.filter(is_approved=False).count(),
     }
+
+    # admins (staff users) also see the whole website's data on their dashboard
+    if request.user.is_staff:
+        context['site_articles'] = Article.objects.filter(is_approved=True).count()
+        context['site_pending'] = Article.objects.filter(is_approved=False).order_by('-created_at')
+        context['site_users'] = User.objects.count()
+        context['site_subscribers'] = Subscriber.objects.count()
+        context['site_messages'] = ContactMessage.objects.order_by('-sent_at')[:5]
+        context['site_message_count'] = ContactMessage.objects.count()
+
     return render(request, 'portal/dashboard.html', context)
+
+
+@login_required
+def approve_article(request, pk):
+    # only admins can approve, and only with the POST button on the dashboard
+    if request.user.is_staff and request.method == 'POST':
+        article = get_object_or_404(Article, pk=pk)
+        article.is_approved = True
+        article.save()
+        messages.success(request, f'"{article.title}" is now live on the website.')
+    return redirect('dashboard')
 
 
 @login_required

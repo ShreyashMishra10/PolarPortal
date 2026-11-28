@@ -21,6 +21,8 @@ venv/
 # Project report (has personal details) - delete these two lines to upload it
 PolarPortal_SRS_Report.docx
 PolarPortal_SRS_Report.pdf
+PolarPortal_Presentation.pptx
+PolarPortal_Presentation.pdf
 
 # Editor and Office temporary files
 .vscode/
