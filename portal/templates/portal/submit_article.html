@@ -38,7 +38,8 @@
         <div class="form-box">
             <h2>New Article</h2>
             <br>
-            <form method="post">
+            <!-- enctype is needed so the browser can send the image file -->
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% include 'portal/includes/form_fields.html' %}
                 <button type="submit" class="btn btn-primary">Submit for Review</button>

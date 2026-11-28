@@ -27,8 +27,9 @@ class ArticleForm(forms.ModelForm):
     """Form logged-in users fill in to submit a new article."""
     class Meta:
         model = Article
-        fields = ['title', 'category', 'region', 'summary', 'content', 'source', 'source_url']
+        fields = ['title', 'category', 'region', 'image', 'summary', 'content', 'source', 'source_url']
         labels = {
+            'image': 'Cover image (optional)',
             'source': 'Source (the research your article is based on)',
             'source_url': 'Source link',
         }

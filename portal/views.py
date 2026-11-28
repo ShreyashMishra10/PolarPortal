@@ -197,7 +197,7 @@ def approve_article(request, pk):
 @login_required
 def submit_article(request):
     if request.method == 'POST':
-        form = ArticleForm(request.POST)
+        form = ArticleForm(request.POST, request.FILES)  # request.FILES holds the uploaded cover image
         if form.is_valid():
             article = form.save(commit=False)  # don't save yet, we fill a few more fields first
             article.submitted_by = request.user

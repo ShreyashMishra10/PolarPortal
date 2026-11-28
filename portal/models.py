@@ -35,6 +35,7 @@ class Article(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='articles')
     region = models.CharField(max_length=20, choices=REGION_CHOICES, default='both')
     icon = models.CharField(max_length=10, blank=True, help_text='Emoji for this article. Leave empty to use the category icon')
+    image = models.ImageField(upload_to='article_images/', blank=True, help_text='Optional cover photo. Without one, the card shows the emoji.')
     author = models.CharField(max_length=100)
     summary = models.CharField(max_length=300)
     content = models.TextField()

@@ -723,6 +723,17 @@ textarea:focus {
     margin-bottom: 18px;
 }
 
+/* the "Choose File" button of the cover image field */
+input[type="file"]::file-selector-button {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--card-border);
+    border-radius: 50px;
+    padding: 6px 16px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
 .form-group label {
     display: block;
     margin-bottom: 6px;
@@ -754,6 +765,14 @@ textarea:focus {
     justify-content: center;
     font-size: 110px;
     margin-bottom: 36px;
+    overflow: hidden;
+}
+
+/* cover photo fills the whole box */
+.article-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .article-layout {

@@ -3,7 +3,11 @@
     <div class="thumb thumb-{{ article.region }}">
         <span class="tag">{{ article.category.name }}</span>
         <span class="tag tag-right">{{ article.get_region_display }}</span>
-        {{ article.get_icon }}
+        {% if article.image %}
+            <img src="{{ article.image.url }}" alt="{{ article.title }}">
+        {% else %}
+            {{ article.get_icon }}
+        {% endif %}
     </div>
     <div class="card-body">
         <h3>{{ article.title }}</h3>

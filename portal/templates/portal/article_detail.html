@@ -8,7 +8,13 @@
     <div class="container">
         <a href="{% url 'article_list' %}" class="back-link">← Back to Knowledge Hub</a>
 
-        <div class="article-hero thumb-{{ article.region }}">{{ article.get_icon }}</div>
+        <div class="article-hero thumb-{{ article.region }}">
+            {% if article.image %}
+                <img src="{{ article.image.url }}" alt="{{ article.title }}">
+            {% else %}
+                {{ article.get_icon }}
+            {% endif %}
+        </div>
 
         <div class="article-layout">
             <article>
