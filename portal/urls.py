@@ -22,7 +22,9 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('submit/', views.submit_article, name='submit_article'),
     path('articles/<int:pk>/bookmark/', views.toggle_bookmark, name='toggle_bookmark'),
+    path('media/upload/', views.upload_media, name='upload_media'),
 
     # admin only
     path('articles/<int:pk>/approve/', views.approve_article, name='approve_article'),
+    path('media/<int:pk>/approve/', views.approve_media, name='approve_media'),
 ]

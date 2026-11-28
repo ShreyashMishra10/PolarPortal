@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
 from .models import Category, Article, MediaItem, Event, Bookmark, ContactMessage, Subscriber
-from .forms import ContactForm, SubscribeForm, ArticleForm
+from .forms import ContactForm, SubscribeForm, ArticleForm, MediaForm
 
 
 # ---------------------------------------------------------------
@@ -85,7 +85,7 @@ def article_detail(request, pk):
 
 def media_gallery(request):
     media_type = request.GET.get('type', '')
-    items = MediaItem.objects.all()
+    items = MediaItem.objects.filter(is_approved=True)  # only show media the admin has approved
     if media_type:
         items = items.filter(media_type=media_type)
 
@@ -163,9 +163,11 @@ def signup(request):
 def dashboard(request):
     my_articles = Article.objects.filter(submitted_by=request.user)
     my_bookmarks = Bookmark.objects.filter(user=request.user, article__is_approved=True).order_by('-saved_at')
+    my_media = MediaItem.objects.filter(submitted_by=request.user)
 
     context = {
         'my_articles': my_articles,
+        'my_media': my_media,
         'my_bookmarks': my_bookmarks,
         'approved_count': my_articles.filter(is_approved=True).count(),
         'pending_count': my_articles.filter(is_approved=False).count(),
@@ -175,6 +177,7 @@ def dashboard(request):
     if request.user.is_staff:
         context['site_articles'] = Article.objects.filter(is_approved=True).count()
         context['site_pending'] = Article.objects.filter(is_approved=False).order_by('-created_at')
+        context['site_pending_media'] = MediaItem.objects.filter(is_approved=False)
         context['site_users'] = User.objects.count()
         context['site_subscribers'] = Subscriber.objects.count()
         context['site_messages'] = ContactMessage.objects.order_by('-sent_at')[:5]
@@ -195,6 +198,37 @@ def approve_article(request, pk):
 
 
 @login_required
+def approve_media(request, pk):
+    # same as approve_article, but for photos, videos, podcasts and documents
+    if request.user.is_staff and request.method == 'POST':
+        item = get_object_or_404(MediaItem, pk=pk)
+        item.is_approved = True
+        item.save()
+        messages.success(request, f'"{item.title}" is now in the Media Gallery.')
+    return redirect('dashboard')
+
+
+@login_required
+def upload_media(request):
+    if request.method == 'POST':
+        form = MediaForm(request.POST, request.FILES)  # request.FILES holds the uploaded file
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.submitted_by = request.user
+            item.is_approved = request.user.is_staff  # admin uploads go live at once, others wait for approval
+            item.save()
+            if item.is_approved:
+                messages.success(request, 'Media added to the gallery!')
+                return redirect('media')
+            messages.success(request, 'Media uploaded! It will appear in the gallery after admin approval.')
+            return redirect('dashboard')
+    else:
+        form = MediaForm()
+
+    return render(request, 'portal/upload_media.html', {'form': form})
+
+
+@login_required
 def submit_article(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST, request.FILES)  # request.FILES holds the uploaded cover image
@@ -202,8 +236,11 @@ def submit_article(request):
             article = form.save(commit=False)  # don't save yet, we fill a few more fields first
             article.submitted_by = request.user
             article.author = request.user.username
-            article.is_approved = False  # admin has to approve it first
+            article.is_approved = request.user.is_staff  # admin articles go live at once, others wait for approval
             article.save()
+            if article.is_approved:
+                messages.success(request, 'Article published!')
+                return redirect('article_detail', pk=article.pk)
             messages.success(request, 'Article submitted! It will appear on the website after admin approval.')
             return redirect('dashboard')
     else:

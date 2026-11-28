@@ -493,10 +493,18 @@ img {
     position: relative;
 }
 
-.thumb img {
+.thumb img,
+.thumb video,
+.thumb iframe {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border: none;
+}
+
+/* the YouTube preview is only for looking; clicks go to the "View resource" link */
+.thumb iframe {
+    pointer-events: none;
 }
 
 .thumb-arctic { background: linear-gradient(135deg, #0f4c75, #2de2d0); }

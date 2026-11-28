@@ -18,8 +18,9 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(MediaItem)
 class MediaItemAdmin(admin.ModelAdmin):
-    list_display = ['title', 'media_type', 'region', 'created_at']
-    list_filter = ['media_type', 'region']
+    list_display = ['title', 'media_type', 'region', 'submitted_by', 'is_approved', 'created_at']
+    list_editable = ['is_approved']  # tick to approve straight from the list
+    list_filter = ['is_approved', 'media_type', 'region']
 
 
 @admin.register(Event)

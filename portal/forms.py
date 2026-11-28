@@ -1,5 +1,5 @@
 from django import forms
-from .models import ContactMessage, Subscriber, Article
+from .models import ContactMessage, Subscriber, Article, MediaItem
 
 
 class ContactForm(forms.ModelForm):
@@ -40,3 +40,34 @@ class ArticleForm(forms.ModelForm):
             'summary': forms.TextInput(attrs={'placeholder': 'One or two lines about your article'}),
             'content': forms.Textarea(attrs={'rows': 12, 'placeholder': 'Write your article here. Leave an empty line between paragraphs.'}),
         }
+
+
+class MediaForm(forms.ModelForm):
+    """Form logged-in users fill in to share a photo, video, podcast or document."""
+    class Meta:
+        model = MediaItem
+        fields = ['title', 'media_type', 'region', 'file', 'link', 'description']
+        labels = {
+            'media_type': 'Type',
+            'file': 'Upload a file (photo, MP4 video or PDF)',
+            'link': 'Or paste a link (YouTube video or website)',
+        }
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'e.g. Penguins at Bharati Station'}),
+            'link': forms.URLInput(attrs={'placeholder': 'https://www.youtube.com/watch?v=...'}),
+            'description': forms.Textarea(attrs={'rows': 4, 'placeholder': 'What does it show? Who made it?'}),
+        }
+
+    def clean(self):
+        # the user must give at least a file or a link
+        data = super().clean()
+        if not data.get('file') and not data.get('link'):
+            raise forms.ValidationError('Please upload a file or paste a link.')
+        return data
+
+    def clean_file(self):
+        # keep uploads small so the free hosting space does not fill up
+        file = self.cleaned_data.get('file')
+        if file and file.size > 20 * 1024 * 1024:
+            raise forms.ValidationError('The file is too big. Please keep it under 20 MB.')
+        return file

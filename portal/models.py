@@ -94,9 +94,13 @@ class MediaItem(models.Model):
     media_type = models.CharField(max_length=20, choices=MEDIA_TYPES)
     region = models.CharField(max_length=20, choices=REGION_CHOICES, default='both')
     description = models.TextField()
-    file = models.FileField(upload_to='media_files/', blank=True, help_text='Upload a photo / PDF (optional)')
-    link = models.URLField(blank=True, help_text='Or give a link to an outside resource')
+    file = models.FileField(upload_to='media_files/', blank=True, help_text='Upload a photo, video (MP4) or PDF')
+    link = models.URLField(blank=True, help_text='Or give a link, e.g. a YouTube video or a website')
     created_at = models.DateTimeField(default=timezone.now)
+
+    # media uploaded by members waits for admin approval, just like articles
+    submitted_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    is_approved = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['-created_at']
@@ -112,6 +116,21 @@ class MediaItem(models.Model):
         # only show the uploaded file as a picture if it really is one
         name = self.file.name.lower()
         return name.endswith(('.jpg', '.jpeg', '.png', '.gif', '.webp'))
+
+    def is_video(self):
+        # uploaded video files can be played straight on the card
+        name = self.file.name.lower()
+        return name.endswith(('.mp4', '.webm', '.ogg', '.mov'))
+
+    def youtube_id(self):
+        # takes the video id out of a YouTube link so we can show the video on the card
+        # e.g. https://www.youtube.com/watch?v=abc123  or  https://youtu.be/abc123  ->  abc123
+        link = self.link
+        if 'youtube.com/watch?v=' in link:
+            return link.split('v=')[1].split('&')[0]
+        if 'youtu.be/' in link:
+            return link.split('youtu.be/')[1].split('?')[0]
+        return ''
 
 
 class Event(models.Model):

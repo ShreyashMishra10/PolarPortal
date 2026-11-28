@@ -1,0 +1,53 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Upload Media{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <div class="aurora aurora-2"></div>
+    <div class="aurora aurora-3"></div>
+    <div class="container">
+        <span class="badge">Contribute</span>
+        <h1>Share <span class="gradient-text">Polar Media</span></h1>
+        <p>Upload a photo, a short video or a document, or share a link to a YouTube video. After admin approval it appears in the Media Gallery.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container contact-grid">
+
+        <div class="contact-info">
+            <div class="feature">
+                <div class="feature-icon">📷</div>
+                <h3>Photos and Videos</h3>
+                <p>Photos show as a picture on the card. MP4 videos and YouTube links play as a silent preview.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">©️</div>
+                <h3>Only Share What You May</h3>
+                <p>Upload your own photos or free resources (for example NASA images), and say who made them.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⏳</div>
+                <h3>Review Process</h3>
+                <p>An admin checks every upload. You can see its status on your dashboard. Files must be under 20 MB.</p>
+            </div>
+        </div>
+
+        <div class="form-box">
+            <h2>New Media</h2>
+            <br>
+            <!-- enctype is needed so the browser can send the file -->
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% include 'portal/includes/form_fields.html' %}
+                <button type="submit" class="btn btn-primary">Upload</button>
+                <a href="{% url 'media' %}" class="btn btn-outline">Cancel</a>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

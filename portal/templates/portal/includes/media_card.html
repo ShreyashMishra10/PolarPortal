@@ -1,9 +1,15 @@
-<!-- One media card. Shows the uploaded picture if there is one, otherwise a coloured box with an icon. -->
+<!-- One media card. The top part shows a preview:
+     photo -> the picture, video file -> plays silently, YouTube link -> plays silently, anything else -> an icon -->
 <div class="card reveal">
     <div class="thumb thumb-{{ item.region }}">
         <span class="tag">{{ item.get_media_type_display }}</span>
         {% if item.file and item.is_image %}
             <img src="{{ item.file.url }}" alt="{{ item.title }}">
+        {% elif item.file and item.is_video %}
+            <video src="{{ item.file.url }}" autoplay muted loop playsinline></video>
+        {% elif item.youtube_id %}
+            <iframe src="https://www.youtube.com/embed/{{ item.youtube_id }}?autoplay=1&mute=1&loop=1&playlist={{ item.youtube_id }}&controls=0"
+                    title="{{ item.title }}" allow="autoplay; encrypted-media"></iframe>
         {% else %}
             {{ item.icon }}
         {% endif %}
